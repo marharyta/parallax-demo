@@ -1,0 +1,205 @@
+<html>
+<head>
+	<title>Prallax Demo 2</title>
+	<style type="text/css">
+	.parallax {
+		width: 100%;
+	    height: 700px;
+	    height: 100vh;
+	    overflow-x: hidden;
+	    overflow-y: auto;
+	    -webkit-perspective: 250px; /* Chrome, Safari, Opera */
+	    perspective: 250px;
+	}
+	.parallax__layer {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    border: solid 1px grey;
+	}
+
+	/*
+	Controlling layer speed
+	Layer speed is controlled by a combination of the perspective and the Z translation values. Elements with negative Z values will scroll slower than those with a positive value. The further the value is from 0 the more pronounced the parallax effect (i.e. translateZ(-10px) will scroll slower than translateZ(-1px)).
+
+	*/
+	/*.parallax__layer--base {
+	  transform: translateZ(40px);
+	  
+	  z-index: 4;
+	}*/
+	.parallax__layer--base--front {
+	  transform: translateZ(90px);
+	  z-index: 5;
+	  
+	}
+	.parallax__layer--back {
+	  transform: translateZ(-90px) scale(4);
+	 z-index: 2;
+	     
+	}
+	.parallax__layer--back2 {
+	  transform: translateZ(-50px) scale(3.2);
+	 z-index: 3;
+	     
+	}
+
+	.parallax__layer--back--deep{
+	  transform: translateZ(-350px) scale(10);
+	 	z-index: 0;
+	     
+	}
+	.parallax__layer--back--deep2{
+	  transform: translateZ(-190px) scale(5);
+	 z-index: 1;
+	     
+	}
+	.parallax__group {
+	    position: relative;
+    	height: 700px;
+
+   	 	
+    	-webkit-transform-style: preserve-3d;
+    	transform-style: preserve-3d;
+
+    	/*-webkit-transform: translate3d(400px, 1200px, -600px) rotateY(21deg);
+       transform: translate3d(400px, 1200px, -600px) rotateY(21deg);*/
+    	
+
+	}
+
+	.layer-color-yellow{
+		background: rgba(255,241,100, 0.5);
+		
+	}
+
+	.layer-color-pink{
+		background-color:rgba(255, 100, 243, 0.5);
+		
+	}
+
+	.layer-color-green{
+		background-color:rgba(39, 210, 18, 0.5)
+		
+	}
+	.layer-color-red{
+		background-color:rgba(255, 7, 7, 0.5);
+		
+	}
+
+	.layer-color-lightyellow{
+		background-color: rgba(241, 141,90, 0.5);
+		
+	}
+
+	.layer-color-blue{
+		background-color: rgba(255, 141,90, 0.5);
+		
+	}
+
+
+
+	.group1{
+		z-index: 5;
+	}
+	.group2{
+		z-index: 3;
+	}
+	.group3{
+		z-index: 4;
+	}
+
+	/*
+
+	if parallax group set to 
+	    position: relative;
+    height: 100vh;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform: rotateY(30deg);
+    transform: rotateY(30deg);
+
+    we get a tourch effect
+
+	*/
+
+	.title {
+	    position: absolute;
+	    left: 50%;
+	    top: 50%;
+	    -webkit-transform: translate(-50%, -50%);
+	    transform: translate(-50%, -50%);
+	}
+
+	/*
+	The scale factor can be calculated with 1 + (translateZ * -1) / perspective. For example, if our viewport perspective is set to 1px and we translate an element -2px along the Z axis the correction scale factor would be 3:
+	 */
+
+	 .checkbox{
+	 	position: fixed;
+	 	top: 3px;
+	 	left: 5px;
+	 	z-index: 1000;
+	 }
+	</style>
+</head>
+<body>
+	<div class="parallax">
+	  <div class="parallax__group group1">
+	    <div class="parallax__layer parallax__layer--back layer-color-pink">
+	      <div class="title">Second-front layer</div>
+	    </div>
+	    <div class="parallax__layer parallax__layer--base--front layer-color-yellow">
+	      <div class="title">First-front layer</div>
+	    </div>
+	  </div>
+
+	  <div class="parallax__group group2">
+
+	  	<!-- Скроллится дольшк всего-->
+	    <div class="parallax__layer parallax__layer--back--deep layer-color-lightyellow">
+	      <div class="title">Sixth</div>
+	    </div>
+	    <div class="parallax__layer parallax__layer--base layer-color-green">
+	      <div class="title">Fourth</div>
+	    </div>
+	  </div>
+	  <div class="parallax__group group3">
+
+	  	<!-- Скроллится дольшк всего-->
+	    <div class="parallax__layer parallax__layer--back--deep2 layer-color-blue">
+	      <div class="title">Fifth</div>
+	    </div>
+	    <div class="parallax__layer parallax__layer--base2 layer-color-red">
+	      <div class="title">Third</div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="checkbox">
+		<form action="setDebugView">
+		  <input type="checkbox" name="debugView" onchange="setDebugView();"> Debugging view<br>
+		</form>
+	</div>
+	<script type="text/javascript">
+		var setDebugView = function(){
+			var groups = document.querySelectorAll(".parallax__group");
+			for (var i = groups.length - 1; i >= 0; i--) {
+				if(groups[i].style.transform != "translate3d(400px, 1200px, -600px) rotateY(21deg)"){
+					groups[i].style.transform = "translate3d(400px, 1200px, -600px) rotateY(21deg)";
+				}
+				else{
+					groups[i].style.transform = " none";
+				}
+				
+			};
+
+		}
+
+		//groups[i].style.transform = "translate3d(400px, 1200px, -600px) rotateY(21deg)";
+	</script>
+
+</body>
+</html>
